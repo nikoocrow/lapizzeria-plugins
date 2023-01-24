@@ -89,9 +89,9 @@ add_action( 'init', 'lapizzeria_registrar_bloques');
 
 function lapizzeria_especialidades_front_end($atts){
 
-   echo "<pre>";
-        var_dump($atts['cantidadMostrar']);
-   echo "</pre>";
+   //echo "<pre>";
+    //    var_dump($atts['cantidadMostrar']);
+  // echo "</pre>";
 
     //Obtener los Datos del Query
     $especialidades = wp_get_recent_posts(array(
