@@ -1,0 +1,21 @@
+{
+  "name": "lapizzeria-gutenberg",
+  "version": "1.0.0",
+  "description": "add gutenberg blocks",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "author": "Nicolas Castro",
+  "license": "ISC",
+  "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
+    "@wordpress/scripts": "^25.2.0",
+    "url-loader": "^4.1.1"
+  },
+  "dependencies": {
+    "@wordpress/data": "^8.2.0",
+    "toml": "^3.0.0"
+  }
+}
