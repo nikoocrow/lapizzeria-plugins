@@ -86,62 +86,53 @@ add_action( 'init', 'lapizzeria_registrar_bloques');
 
 
 /** CONSULTA LA BASE DE DATOS PARA MOSTRAR LOS RESULTADOS EN EL FRONTEND */
-
 function lapizzeria_especialidades_front_end($atts){
 
-   //echo "<pre>";
-    //    var_dump($atts['cantidadMostrar']);
-  // echo "</pre>";
 
-    //Obtener los Datos del Query
-    $especialidades = wp_get_recent_posts(array(
-        'post_type'    => 'especialidades',
-        'post_status'  => 'publish',
-        'numberposts'  => $atts['cantidadMostrar'],
-        'tax_query' => array(
-                array(
-                    'taxonomy' => 'categoria-menu',
-                    'terms'    => $atts['categoriaMenu'],
-                    'field'    => 'term_id'
-                )
-        )
-    ));
+        var_dump($atts);
 
-    // Revisar que hayan resultados
-    if(count($especialidades) == 0){
-        return 'No hay Especialidades';
-    }
 
-        $cuerpo = '';
-        $cuerpo .= '<h2 class="titulo-menu">';
-        $cuerpo .= $atts['tituloBloque'];
-        $cuerpo .= '</h2>';
-        $cuerpo .= '<ul class="nuestro-menu">';
-            foreach($especialidades as $esp):
+        //Obtener datos del Query
+      $especialidades = wp_get_recent_posts(array(
+        'post_type' => 'especialidades',
+        'post_status' => 'publish',
+        'number_posts' => 10
+      ));
 
-                //Obtener un Objeto del post
-                $post = get_post($esp['ID']);
-                setup_postdata($post);
-                $cuerpo .= sprintf(
-                    '<li>
-                        %1$s
+      //revisar que hayan resultados
+
+      if(count($especialidades) == 0){
+        return 'No hay especialidades';
+      }
+      $cuerpo  = '';
+      $cuerpo .= '<h2>Nuestras especialidades</h2>';
+      $cuerpo .= '<ul class="nuestro-menu">';
+        foreach($especialidades as $esp):
+            //obtener un objeto del post
+            $post = get_post($esp['ID']);
+            setup_postdata($post);
+
+            $cuerpo .= sprintf(
+                '<li>
+                    %1$s
                         <div class="platillo">
                             <div class="precio-titulo">
-                                <h3>%2$s</h3>
-                                <p>$ %3$s</p>
-                            </div>
-                            <div class="contenido-platillo">
-                                <p>%4$s</p>
-                            </div>
+                                 <h3>%2$s</h3>
+                                <p>$ %3$s</p> 
                         </div>
-                    </li>', 
+                        <div class="contenido-platillo">
+                            <p>%4$s</p>
+                        </div>
+                </div>
+                <li>',
                     get_the_post_thumbnail($post,'especialidades'),
-                    get_the_title(),
+                    get_the_title($post),
                     get_field('precio', $post),
                     get_the_content($post)
-                );
-                wp_reset_postdata();
-            endforeach;
-        $cuerpo .= '</ul>';
-    return $cuerpo;
+            );
+            wp_reset_postdata();
+        endforeach;
+      $cuerpo .= '</ul>';
+
+      return $cuerpo;
 }

@@ -255,109 +255,55 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('lapizzeria/menu', {
   apiVersion: 2,
-  title: 'La pizzeria Menu',
+  title: 'la Pizzeria Menu',
   icon: {
     src: _pizzeria_icon_svg__WEBPACK_IMPORTED_MODULE_5__.ReactComponent
   },
   category: 'lapizzeria',
   attributes: {
     cantidadMostrar: {
-      type: 'number'
-    },
-    categoriaMenu: {
-      type: 'number'
-    },
-    tituloBloque: {
-      type: 'string',
-      default: 'Titulo Bloque'
+      type: 'number',
+      default: 4
     }
   },
   edit: (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.withSelect)((select, props) => {
-    //Extraer los Valores
+    //extraer valores desde props
+
     const {
       attributes: {
-        cantidadMostrar,
-        categoriaMenu
+        cantidadMostrar
       },
       setAttributes
     } = props;
     const onChangeCantidadMostrar = nuevaCantidad => {
       setAttributes({
-        cantidadMostrar: parseInt(nuevaCantidad)
+        cantidadMostrar: nuevaCantidad
       });
     };
-    const onChangeCategoriaMenu = nuevaCategoria => {
-      setAttributes({
-        categoriaMenu: nuevaCategoria
-      });
-    };
-    const onChangeTituloBloque = nuevoTitulo => {
-      setAttributes({
-        tituloBloque: nuevoTitulo
-      });
-    };
+
+    /** CORE AQUI */
     return {
-      categorias: select("core").getEntityRecords('taxonomy', 'categoria-menu'),
       //Enviar una peticion a la API
       especialidades: select("core").getEntityRecords('postType', 'especialidades', {
-        'categoria-menu': categoriaMenu,
-        per_page: cantidadMostrar || 4
-        //pasar funciones al otro scope
+        per_page: cantidadMostrar
       }),
-
       onChangeCantidadMostrar,
-      onChangeCategoriaMenu,
-      onChangeTituloBloque,
       props
     };
   })(_ref => {
     let {
       especialidades,
       onChangeCantidadMostrar,
-      onChangeCategoriaMenu,
-      onChangeTituloBloque,
-      props,
-      categorias
+      props
     } = _ref;
-    console.log(categorias);
+    console.log(especialidades);
 
-    //Extraer los props  
+    //Extraer los Props
     const {
       attributes: {
-        cantidadMostrar,
-        tituloBloque,
-        categoriaMenu
+        cantidadMostrar
       }
     } = props;
-
-    //Verificar Especialidades
-    if (!especialidades) {
-      return 'Cargando....';
-    }
-
-    //Si no hay especialidades
-    if (especialidades && especialidades.length === 0) {
-      return 'No hay resultados';
-    }
-
-    //Verificar Categorias
-    if (!categorias) {
-      console.log('No hay categorias');
-    }
-    if (categorias && categorias.length === 0) {
-      console.log('No hay resultados');
-    }
-
-    //generar Label y Value a Categorias
-    categorias.forEach(categoria => {
-      categoria['label'] = categoria.name;
-      categoria['value'] = categoria.id;
-    });
-    const opcionDefault = [{
-      value: '',
-      label: '--Todos--'
-    }];
-    const listadoCategorias = [...opcionDefault, ...categorias];
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
       title: 'Cantidad a Mostrar',
       initialOpen: true
@@ -371,35 +317,8 @@ __webpack_require__.r(__webpack_exports__);
       onChange: onChangeCantidadMostrar,
       min: 2,
       max: 10,
-      value: cantidadMostrar || 4
-    })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-      title: 'Categoria de Especialidad',
-      initialOpen: false
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "components-base-control"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "components-base-control__field"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-      className: "components-base-control__label"
-    }, "Cantegoria de Especialidad"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
-      options: categorias,
-      onChange: onChangeCategoriaMenu,
       value: cantidadMostrar
-    })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
-      title: 'Titulo Bloque',
-      initialOpen: false
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "components-base-control"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "components-base-control__field"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-      className: "components-base-control__label"
-    }, "Cantegoria de Especialidad"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
-      onChange: onChangeTituloBloque,
-      value: tituloBloque
-    }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
-      className: "titulo-menu"
-    }, tituloBloque), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
+    }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Nuestras especialidades"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", {
       className: "nuestro-menu"
     }, especialidades?.map(especialidad => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       src: especialidad.imagen_destacada
@@ -407,7 +326,7 @@ __webpack_require__.r(__webpack_exports__);
       className: "platillo"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "precio-titulo"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, especialidad.title.rendered), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "$", especialidad.precio)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, especialidad.title.rendered), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "$ ", especialidad.precio)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "contenido-platillo"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.RichText.Content, {
       value: especialidad.content.rendered.substring(0, 180)
